@@ -31,7 +31,7 @@
   &__inner {
     position: relative;
     z-index: 100;
-    min-height: calc(100vh - 3em);
+    min-height: calc(100dvh - 3em);
     width: 100%;
     display: flex;
     border: 1.5px solid var(--text);

@@ -336,7 +336,7 @@ function FinishedStage({
         description: event.description,
         location: event.location,
       },
-      (error, value) => {
+      (_error, value) => {
         const blob = new Blob([value], { type: "text/calendar" });
         const url = URL.createObjectURL(blob);
         setCalendarEvent(url);

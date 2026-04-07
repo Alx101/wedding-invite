@@ -44,7 +44,7 @@ function InvitationStage() {
         <div className="first_title__subline">
           <span className="mono">Norbergsvägen 17, 733 60 Västerfärnebo</span>
           <span className="cursive">13th June</span>
-          <span className="mono">2.30 PM</span>{" "}
+          <span className="mono">14:30</span>{" "}
         </div>
       </div>
     </>
@@ -371,7 +371,7 @@ function FinishedStage({
         </span>
       </a>
       <a className="dates mono" href={calendarEvent} target="_blank">
-        Add to calendar: <span className="underline">13th June | 2.30 PM</span>
+        Add to calendar: <span className="underline">13th June | 14:30</span>
       </a>
     </div>
   );
@@ -529,26 +529,28 @@ function App() {
           <div className="card__overlay"></div>
         </div>
       ))}
-      <div
-        className={[
-          "card",
-          rsvpStep === names.length ? "visible" : "hidden",
-        ].join(" ")}
-        id="finalize"
-      >
-        <div className="card__inner">
-          <div className="card__header">Final confirmation</div>
-          <div className="card__content">
-            <FinishedStage
-              loading={sending}
-              names={names}
-              submit={() => handleSubmit(onSubmit)()}
-              sent={sent}
-            />
+      {names.length > 0 && (
+        <div
+          className={[
+            "card",
+            rsvpStep === names.length ? "visible" : "hidden",
+          ].join(" ")}
+          id="finalize"
+        >
+          <div className="card__inner">
+            <div className="card__header">Final confirmation</div>
+            <div className="card__content">
+              <FinishedStage
+                loading={sending}
+                names={names}
+                submit={() => handleSubmit(onSubmit)()}
+                sent={sent}
+              />
+            </div>
           </div>
+          <div className="card__overlay"></div>
         </div>
-        <div className="card__overlay"></div>
-      </div>
+      )}
     </>
   );
 }

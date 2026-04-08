@@ -76,28 +76,17 @@ const timelineItems = [
   },
   {
     time: "15:30",
-    description_text: "Fika & speeches\nOutdoors",
+    description_text: "Fika, mingle & games\nOutdoors",
     description: (
       <>
-        Fika & speeches
+        Fika, mingle & games
         <br />
         Outdoors
       </>
     ),
   },
   {
-    time: "16:15",
-    description_text: "Games & mingle\nOutdoors",
-    description: (
-      <>
-        Games & mingle
-        <br />
-        Outdoors
-      </>
-    ),
-  },
-  {
-    time: "17:30",
+    time: "18:00",
     description_text: "Buffet & BBQ dinner\nIndoors & outdoors",
     description: (
       <>
@@ -108,7 +97,7 @@ const timelineItems = [
     ),
   },
   {
-    time: "18:30",
+    time: "19:30",
     description_text: "Music & dancing\nOutdoors",
     description: (
       <>
@@ -120,7 +109,7 @@ const timelineItems = [
   },
 ];
 
-function DetailsStage() {
+function DetailsStage({ names }: { names: string[] }) {
   return (
     <>
       <div className="timeline">
@@ -147,18 +136,20 @@ function DetailsStage() {
         <h2>VIBE</h2>
         <p>Relaxed, simplistic and homely.</p>
       </div>
-      <div className="rsvp-button">
-        <button
-          onClick={() =>
-            window.scrollTo({
-              top: document.getElementById("rsvp_0")?.offsetTop ?? 0,
-              behavior: "smooth",
-            })
-          }
-        >
-          RSVP
-        </button>
-      </div>
+      {names.length > 0 && (
+        <div className="rsvp-button">
+          <button
+            onClick={() =>
+              window.scrollTo({
+                top: document.getElementById("rsvp_0")?.offsetTop ?? 0,
+                behavior: "smooth",
+              })
+            }
+          >
+            RSVP
+          </button>
+        </div>
+      )}
     </>
   );
 }
@@ -337,9 +328,8 @@ function FinishedStage({
         location: event.location,
       },
       (_error, value) => {
-        const blob = new Blob([value], { type: "text/calendar" });
-        const url = URL.createObjectURL(blob);
-        setCalendarEvent(url);
+        const url = encodeURIComponent(value);
+        setCalendarEvent(`data:text/calendar;charset=utf-8,${url}`);
       },
     );
   }, []);
@@ -351,28 +341,36 @@ function FinishedStage({
           <li key={name}>{name}</li>
         ))}
       </ul>
-      <div className="confirm-button">
-        {!sent && (
-          <button onClick={submit} disabled={loading}>
-            {loading ? "Sending..." : "Confirm"}
-          </button>
-        )}
-        {sent && <span className="notice">RSVP sent!</span>}
-      </div>
+      {names.length > 0 && (
+        <div className="confirm-button">
+          {!sent && (
+            <button onClick={submit} disabled={loading}>
+              {loading ? "Sending..." : "Confirm"}
+            </button>
+          )}
+          {sent && <span className="notice">RSVP sent!</span>}
+        </div>
+      )}
 
       <a
         className="map mono"
         href="https://maps.app.goo.gl/UF5c5j9eeUtcdLUZ6"
         target="_blank"
       >
-        Map:{" "}
+        Link to map:
+        <br />
         <span className="underline">
           Norbergsvägen 17, 733 60 Västerfärnebo
         </span>
       </a>
-      <a className="dates mono" href={calendarEvent} target="_blank">
-        Add to calendar: <span className="underline">13th June | 14:30</span>
+      <a className="dates mono" href={calendarEvent} download="wedding.ics">
+        Click to add to calendar:
+        <br />
+        <span className="underline">13th June | 14:30</span>
       </a>
+      <p className="info mono">
+        (More information will follow, check back soon)
+      </p>
     </div>
   );
 }
@@ -475,7 +473,7 @@ function App() {
     {
       id: "details",
       title: "Wedding Details",
-      content: <DetailsStage />,
+      content: <DetailsStage names={names} />,
       visible: true,
     },
     {
@@ -529,28 +527,28 @@ function App() {
           <div className="card__overlay"></div>
         </div>
       ))}
-      {names.length > 0 && (
-        <div
-          className={[
-            "card",
-            rsvpStep === names.length ? "visible" : "hidden",
-          ].join(" ")}
-          id="finalize"
-        >
-          <div className="card__inner">
-            <div className="card__header">Final confirmation</div>
-            <div className="card__content">
-              <FinishedStage
-                loading={sending}
-                names={names}
-                submit={() => handleSubmit(onSubmit)()}
-                sent={sent}
-              />
-            </div>
+      <div
+        className={[
+          "card",
+          names.length === 0 || rsvpStep === names.length
+            ? "visible"
+            : "hidden",
+        ].join(" ")}
+        id="finalize"
+      >
+        <div className="card__inner">
+          <div className="card__header">Final confirmation</div>
+          <div className="card__content">
+            <FinishedStage
+              loading={sending}
+              names={names}
+              submit={() => handleSubmit(onSubmit)()}
+              sent={sent}
+            />
           </div>
-          <div className="card__overlay"></div>
         </div>
-      )}
+        <div className="card__overlay"></div>
+      </div>
     </>
   );
 }

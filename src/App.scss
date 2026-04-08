@@ -159,7 +159,7 @@
 
 
 .flipbook_background {
-  background-image: url('./assets/flipbook_1.png');
+  background-image: url('./assets/flipbook_1.jpg');
   background-size: 210%;
   background-position: center 69%;
   background-repeat: no-repeat;
@@ -169,19 +169,19 @@
 
 @keyframes flipbook_background_animation {
   0% {
-    background-image: url('./assets/flipbook_1.png');
+    background-image: url('./assets/flipbook_1.jpg');
     background-position: center 69%;
   }
   25% {
-    background-image: url('./assets/flipbook_2.png');
+    background-image: url('./assets/flipbook_2.jpg');
     background-position: center 69%;
   }
   50% {
-    background-image: url('./assets/flipbook_3.png');
+    background-image: url('./assets/flipbook_3.jpg');
     background-position: center 69%;
   }
   75% {
-    background-image: url('./assets/flipbook_4.png');
+    background-image: url('./assets/flipbook_4.jpg');
     background-position: 53% 76%;
   }
 }

@@ -42,7 +42,11 @@ function InvitationStage() {
         </div>
         <div className="first_title__line">WEDDING</div>
         <div className="first_title__subline">
-          <span className="mono">Norbergsvägen 17, 733 60 Västerfärnebo</span>
+          <span className="mono">
+            Norbergsvägen 17, 733 60 Västerfärnebo
+            <br />
+            Gammelgården
+          </span>
           <span className="cursive">13th June</span>
           <span className="mono">14:30</span>{" "}
         </div>
@@ -129,12 +133,16 @@ function DetailsStage({ names }: { names: string[] }) {
         <p>
           Cocktail.
           <br />
-          Venue is mixed indoor and outdoors, dress accordingly.
+          Venue is mixed indoor and outdoors, please dress accordingly.
         </p>
       </div>
       <div className="details">
-        <h2>VIBE</h2>
-        <p>Relaxed, simplistic and homely.</p>
+        <h2>VIBE & VENUE</h2>
+        <p>
+          Informal, comfortable and homely.
+          <br />
+          Set in the barn and surrounding garden at Västerfärnebo Gammelgård.
+        </p>
       </div>
       {names.length > 0 && (
         <div className="rsvp-button">
@@ -305,7 +313,8 @@ function FinishedStage({
   loading: boolean;
   sent: boolean;
 }) {
-  const [calendarEvent, setCalendarEvent] = React.useState<string>("");
+  const [calendarUrl, setCalendarUrl] = React.useState<string>("");
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   React.useEffect(() => {
     const timeline = timelineItems
@@ -328,11 +337,19 @@ function FinishedStage({
         location: event.location,
       },
       (_error, value) => {
-        const url = encodeURIComponent(value);
-        setCalendarEvent(`data:text/calendar;charset=utf-8,${url}`);
+        const blob = new Blob([value], { type: "text/calendar;charset=utf-8" });
+        setCalendarUrl(URL.createObjectURL(blob));
       },
     );
   }, []);
+
+  const handleCalendarClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (isIOS) {
+      e.preventDefault();
+      window.location.href = calendarUrl;
+    }
+  };
+
   return (
     <div className="finalize_attendance">
       <h2 className="summary">CONFIRMING ATTENDANCE FOR</h2>
@@ -363,7 +380,12 @@ function FinishedStage({
           Norbergsvägen 17, 733 60 Västerfärnebo
         </span>
       </a>
-      <a className="dates mono" href={calendarEvent} download="wedding.ics">
+      <a
+        className="dates mono"
+        href={calendarUrl}
+        download={isIOS ? undefined : "wedding.ics"}
+        onClick={handleCalendarClick}
+      >
         Click to add to calendar:
         <br />
         <span className="underline">13th June | 14:30</span>

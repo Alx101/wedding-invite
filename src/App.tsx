@@ -90,18 +90,18 @@ const timelineItems = [
     ),
   },
   {
-    time: "18:00",
-    description_text: "Buffet & BBQ dinner\nIndoors & outdoors",
+    time: "17:30",
+    description_text: "Dinner\nIndoors & outdoors",
     description: (
       <>
-        Buffet & BBQ dinner
+        Dinner
         <br />
         Indoors & outdoors
       </>
     ),
   },
   {
-    time: "19:30",
+    time: "20:00",
     description_text: "Music & dancing\nOutdoors",
     description: (
       <>

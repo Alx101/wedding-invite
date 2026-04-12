@@ -91,10 +91,10 @@ const timelineItems = [
   },
   {
     time: "17:30",
-    description_text: "Dinner\nIndoors & outdoors",
+    description_text: "Buffet dinner\nIndoors & outdoors",
     description: (
       <>
-        Dinner
+        Buffet dinner
         <br />
         Indoors & outdoors
       </>
@@ -133,7 +133,7 @@ function DetailsStage({ names }: { names: string[] }) {
         <p>
           Cocktail.
           <br />
-          Venue is mixed indoor and outdoors, please dress accordingly.
+          Venue is mixed indoor and outdoors on grass, please dress accordingly.
         </p>
       </div>
       <div className="details">

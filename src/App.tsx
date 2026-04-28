@@ -142,6 +142,9 @@ function DetailsStage({ names }: { names: string[] }) {
           Informal, comfortable and homely.
           <br />
           Set in the barn and surrounding garden at Västerfärnebo Gammelgård.
+          <br />
+          <br />
+          Location in timeline may change depending on weather
         </p>
       </div>
       {names.length > 0 && (

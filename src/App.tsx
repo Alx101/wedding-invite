@@ -144,7 +144,7 @@ function DetailsStage({ names }: { names: string[] }) {
           Set in the barn and surrounding garden at Västerfärnebo Gammelgård.
           <br />
           <br />
-          Location in timeline may change depending on weather
+          Indoor/Outdoor setup may swap depending on weather
         </p>
       </div>
       {names.length > 0 && (
